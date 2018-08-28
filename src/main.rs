@@ -2,7 +2,7 @@
 extern crate structopt;
 extern crate rand;
 
-use rand::Rng;
+use rand::{Rng, FromEntropy};
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
@@ -47,7 +47,7 @@ fn main() -> Result<(), String> {
     dict.sort_unstable();
     dict.dedup();
 
-    let mut rng = rand::EntropyRng::new();
+    let mut rng = rand::StdRng::from_entropy();
 
     let mkpass = || {
         repeat_with(|| rng.choose(&dict).expect("dictionary shouldn't be empty"))
